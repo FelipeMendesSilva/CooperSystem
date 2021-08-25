@@ -33,6 +33,10 @@ namespace CooperSystem.Api
             services.AddDbContext<DbContexto>(opt => opt.UseInMemoryDatabase("CooperSysDB")
             , ServiceLifetime.Scoped
             ,ServiceLifetime.Scoped);
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             services.AddControllers();
             services.AddScoped<ICarroRepositorio, CarroRepositorio>();
             services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();

@@ -1,6 +1,7 @@
 ﻿using CooperSystem.Dominio.Entidades;
 using CooperSystem.Dominio.Interfaces;
 using CooperSystem.InfraDados.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace CooperSystem.InfraDados.Repositorios
         public Carro Detalhar(int id)
         {
 
-            return _dbContexto.Carros.FirstOrDefault(c => c.CarroId == id);
+            return _dbContexto.Carros.Include(c => c.Marca).FirstOrDefault(c => c.CarroId == id);
         }
 
         

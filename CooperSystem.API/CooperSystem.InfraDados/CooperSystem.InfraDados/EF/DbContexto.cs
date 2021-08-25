@@ -15,7 +15,8 @@ namespace CooperSystem.InfraDados.EF
 
         public DbContexto(DbContextOptions<DbContexto> options) : base(options) 
         {
-        
+            
         }
+        
     }
 }

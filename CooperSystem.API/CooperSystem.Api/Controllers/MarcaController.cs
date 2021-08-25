@@ -24,15 +24,10 @@ namespace CooperSystem.Api.Controllers
         //api/carros?nome=ABC&origem=ABC
         public IActionResult Listar(string nome, string origem)
         {
-            var lista = _marcaRepositorio.Listar(nome, origem);
-            var lista2  = new List<MarcaModelo>();
-            foreach(Marca marca in lista)
-            {
-                var marcaMod = _mapper.Map<MarcaModelo>(marca);
-                lista2.Add(marcaMod);
-            }
-
-            return Ok(lista2);
+            var marcas = _marcaRepositorio.Listar(nome, origem);
+            var modelos  =  _mapper.Map<IEnumerable<MarcaModelo>>(marcas);
+            
+            return Ok(modelos);
         }
 
         [HttpGet("{id}")]
@@ -41,12 +36,12 @@ namespace CooperSystem.Api.Controllers
             if (!_marcaRepositorio.Existe(id)) { return NotFound(); }
 
             var marca = _marcaRepositorio.Detalhar(id);
-            var marcaModelo = _mapper.Map<MarcaModelo>(marca);
-            return Ok(marcaModelo);
+            var marcaDetalheModelo = _mapper.Map<MarcaDetalheModelo>(marca);
+            return Ok(marcaDetalheModelo);
         }
 
         [HttpPost]
-        public IActionResult Adicionar([FromBody] MarcaModelo marcaModelo)
+        public IActionResult Adicionar([FromBody] MarcaAddModelo marcaModelo)
         {
             var marca = _mapper.Map<Marca>(marcaModelo);
             _marcaRepositorio.Adicionar(marca);
@@ -54,10 +49,10 @@ namespace CooperSystem.Api.Controllers
         }
 
         [HttpPut]
-        public IActionResult Atualizar([FromBody] Marca marca)
+        public IActionResult Atualizar([FromBody] MarcaEditModelo marcaMod)
         {
-            if (!_marcaRepositorio.Existe(marca.MarcaId)) { return NotFound(); }
-
+            if (!_marcaRepositorio.Existe(marcaMod.MarcaId)) { return NotFound(); }
+            var marca = _mapper.Map<Marca>(marcaMod);
             _marcaRepositorio.Editar(marca);
             return NoContent();
         }

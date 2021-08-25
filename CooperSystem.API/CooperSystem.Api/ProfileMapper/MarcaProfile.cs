@@ -8,9 +8,17 @@ namespace CooperSystem.Api.ProfileMapper
     {
         public MarcaProfile()
         {
+            CreateMap<Marca, MarcaDetalheModelo>();
+            CreateMap<MarcaDetalheModelo, Marca>();
+
             CreateMap<Marca, MarcaModelo>();
             CreateMap<MarcaModelo, Marca>();
 
+            CreateMap<Marca, MarcaAddModelo>();
+            CreateMap<MarcaAddModelo, Marca>();
+
+            CreateMap<Marca, MarcaEditModelo>();
+            CreateMap<MarcaEditModelo, Marca>();
         }
 
 

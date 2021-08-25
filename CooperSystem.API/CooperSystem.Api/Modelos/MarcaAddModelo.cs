@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 
 namespace CooperSystem.Api.Modelos
 {
-    public class CarroModelo
+    public class MarcaAddModelo
     {
-       
-        public string Nome { get; set; }
-        public int Ano { get; set; }
         public string Origem { get; set; }
+        public string Nome { get; set; }
     }
 }
- 

@@ -24,15 +24,10 @@ namespace CooperSystem.Api.Controllers
         //api/carros?nome=ABC&origem=ABC
         public IActionResult Listar(string nome, string origem)
         {
-            var lista = _carroRepositorio.Listar(nome, origem);
-            var lista2 = new List<Carro3ColModelo>();
-            foreach (Carro carro in lista)
-            {
-                var carroMod = _mapper.Map<Carro3ColModelo>(carro);
-                lista2.Add(carroMod);
-            }
+            var carros = _carroRepositorio.Listar(nome, origem);
+            var modelos = _mapper.Map<IEnumerable<CarroModelo>>(carros);
 
-            return Ok(lista2);
+            return Ok(modelos);
         }
         
         [HttpGet("{id}")]
@@ -41,12 +36,12 @@ namespace CooperSystem.Api.Controllers
             if (!_carroRepositorio.Existe(id)) { return NotFound(); }
 
             var carro = _carroRepositorio.Detalhar(id);
-            var carroMod = _mapper.Map<CarroModelo>(carro);
+            var carroMod = _mapper.Map<CarroDetalheModelo>(carro);
             return Ok(carroMod); 
         }
 
         [HttpPost]
-        public IActionResult Adicionar([FromBody] CarroModelo carroModelo)
+        public IActionResult Adicionar([FromBody] CarroAddModelo carroModelo)
         {
             var carro = _mapper.Map<Carro>(carroModelo);
             _carroRepositorio.Adicionar(carro);
@@ -54,10 +49,11 @@ namespace CooperSystem.Api.Controllers
         }
 
         [HttpPut]
-        public IActionResult Atualizar([FromBody] Carro carro)
+        public IActionResult Atualizar([FromBody] CarroEditModelo carroMod)
         {
-            if (!_carroRepositorio.Existe(carro.CarroId)) { return NotFound(); }
-
+            if (!_carroRepositorio.Existe(carroMod.CarroId)) { return NotFound(); }
+            var carro = _mapper.Map<Carro>(carroMod);
+           
             _carroRepositorio.Editar(carro);
             return NoContent();
         }

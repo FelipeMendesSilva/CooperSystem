@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-
-namespace CooperSystem.Dominio.Entidades
+namespace CooperSystem.Api.Modelos
 {
-    public class Carro
+    public class CarroAddModelo
     {
-        
-
-        public int CarroId { get; set; }
         public string Nome { get; set; }
         public int KmPorGalao { get; set; }
         public int Cilindros { get; set; }
@@ -19,7 +18,5 @@ namespace CooperSystem.Dominio.Entidades
         public string Origem { get; set; }
 
         public int MarcaId { get; set; }
-        public Marca Marca { get; set; }
-        
     }
 }

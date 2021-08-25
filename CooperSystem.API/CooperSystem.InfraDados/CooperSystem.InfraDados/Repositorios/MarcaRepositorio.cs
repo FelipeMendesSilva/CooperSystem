@@ -1,6 +1,7 @@
 ﻿using CooperSystem.Dominio.Entidades;
 using CooperSystem.Dominio.Interfaces;
 using CooperSystem.InfraDados.EF;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,7 @@ namespace CooperSystem.InfraDados.Repositorios
 
         public Marca Detalhar(int id)
         {
-            return _dbContexto.Marcas.FirstOrDefault(c => c.MarcaId == id);
+            return _dbContexto.Marcas.Include(m => m.Carros).FirstOrDefault(c => c.MarcaId == id);
         }
         public void Remover(Marca marca)
         {
